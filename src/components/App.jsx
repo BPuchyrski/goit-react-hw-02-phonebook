@@ -32,15 +32,6 @@ export class App extends Component {
     }
   };
 
-  removeContact = e => {
-    const { contacts } = this.state;
-    const newContacts = [...contacts];
-    const number = e.currentTarget.attributes.number.value;
-    const index = contacts.findIndex(contact => contact.number === number);
-    newContacts.splice(index, 1);
-    this.setState({ contacts: newContacts });
-  };
-
   handleFilterChange = e => {
     const searchTerm = e.target.value;
     const { contacts } = this.state;
@@ -48,6 +39,18 @@ export class App extends Component {
       contact.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     this.setState({ filter: filteredContacts });
+    if (searchTerm === '') {
+      this.setState({ filter: '' });
+    }
+  };
+
+  removeContact = e => {
+    const { contacts } = this.state;
+    const newContacts = [...contacts];
+    const number = e.currentTarget.attributes.number.value;
+    const index = contacts.findIndex(contact => contact.number === number);
+    newContacts.splice(index, 1);
+    this.setState({ contacts: newContacts });
   };
 
   render() {
