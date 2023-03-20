@@ -51,6 +51,16 @@ export class App extends Component {
     const index = contacts.findIndex(contact => contact.number === number);
     newContacts.splice(index, 1);
     this.setState({ contacts: newContacts });
+    this.removeFilter(e);
+  };
+
+  removeFilter = e => {
+    const { filter } = this.state;
+    const newFilter = [...filter];
+    const number = e.currentTarget.attributes.number.value;
+    const index = filter.findIndex(contact => contact.number === number);
+    newFilter.splice(index, 1);
+    this.setState({ filter: newFilter });
   };
 
   render() {
@@ -64,6 +74,7 @@ export class App extends Component {
           contacts={this.state.contacts}
           delite={this.removeContact}
           filter={this.state.filter}
+          deliteFilter={this.removeFilter}
         />
       </div>
     );
