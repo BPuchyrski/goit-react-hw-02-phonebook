@@ -21,7 +21,9 @@ export class App extends Component {
     const form = e.currentTarget;
     const name = form.elements.name.value;
     const number = form.elements.number.value;
-    const index = contacts.findIndex(contact => contact.number === number);
+    const index = contacts.findIndex(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
     if (index === -1) {
       const newContacts = [...contacts];
       const id = nanoid();
@@ -45,13 +47,15 @@ export class App extends Component {
   };
 
   removeContact = e => {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
     const newContacts = [...contacts];
     const number = e.currentTarget.attributes.number.value;
     const index = contacts.findIndex(contact => contact.number === number);
     newContacts.splice(index, 1);
     this.setState({ contacts: newContacts });
-    this.removeFilter(e);
+    if (filter !== '') {
+      this.removeFilter(e);
+    }
   };
 
   removeFilter = e => {
